@@ -27,7 +27,7 @@
 # keep the above two lines but also add:
 #/vis/filtering/trajectories/particleFilter-0/invert true
 
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 1000
 
 /vis/set/textColour green
 /vis/set/textLayout right

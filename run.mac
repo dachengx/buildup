@@ -1,11 +1,13 @@
-#/run/numberOfThreads 100
+/run/numberOfThreads 100
 
-/run/initialize
+/control/saveHistory
 
 /control/verbose 0
 /run/verbose 0
 /event/verbose 0
 /tracking/verbose 0
+
+/run/initialize
 
 /gps/particle gamma
 /gps/ene/mono 5 MeV
@@ -26,5 +28,5 @@
 
 /gps/pos/centre 0 0 -10 cm
 
-/run/printProgress 100
-/run/beamOn 1000
+/run/printProgress 10000
+/run/beamOn 100
