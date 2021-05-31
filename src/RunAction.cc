@@ -9,6 +9,7 @@
 #include "G4LogicalVolume.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4GeneralParticleSource.hh"
 
 RunAction::RunAction()
 : G4UserRunAction(),
@@ -53,8 +54,8 @@ void RunAction::EndOfRunAction(const G4Run* run)
   G4String runCondition;
   if (generatorAction)
   {
-    const G4ParticleGun* particleGun = generatorAction->GetParticleGun();
-    runCondition += particleGun->GetParticleDefinition()->GetParticleName();
+    const G4GeneralParticleSource* particleGun = generatorAction->GetGeneralParticleSource();
+    runCondition += particleGun->GetCurrentSource()->GetParticleDefinition()->GetParticleName();
     runCondition += " of ";
     G4double particleEnergy = particleGun->GetParticleEnergy();
     runCondition += G4BestUnit(particleEnergy, "Energy");

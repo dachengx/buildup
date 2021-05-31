@@ -45,8 +45,7 @@ target_link_libraries(buildup ${Geant4_LIBRARIES})
 #
 set(BUILDUP_SCRIPTS
   init_vis.mac
-  run1.mac
-  run2.mac
+  run.mac
   vis.mac
   )
 

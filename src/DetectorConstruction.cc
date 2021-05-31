@@ -4,15 +4,10 @@
 #include "G4NistManager.hh"
 #include "G4Box.hh"
 #include "G4Tubs.hh"
-#include "G4Orb.hh"
-#include "G4Sphere.hh"
-#include "G4Trd.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
-#include "G4Material.hh"
-#include "G4Element.hh"
 
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction(),
@@ -58,14 +53,40 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                       false,                 //no boolean operation
                       0,                     //copy number
                       checkOverlaps);        //overlaps checking
- 
+
+  //     
+  // Source
+  //  
+  G4ThreeVector pos0 = G4ThreeVector(0, 0, -10.*cm);
+
+  G4double source_pRMin =  0.*cm, source_pRMax = 0.635*cm;
+  G4double source_pDz =  0.5*cm;
+  G4double source_pSPhi = 0.*deg, source_pDPhi = 360.*deg;
+  G4Tubs* solidSource =    
+    new G4Tubs("Source", 
+    source_pRMin, source_pRMax, source_pDz, source_pSPhi, source_pDPhi);
+                      
+  G4LogicalVolume* logicSource =                         
+    new G4LogicalVolume(solidSource,         //its solid
+                        world_mat,          //its material
+                        "Source");           //its name
+               
+  new G4PVPlacement(0,                       //no rotation
+                    pos0,                    //at position
+                    logicSource,         //its logical volume
+                    "Source",            //its name
+                    logicWorld,              //its mother  volume
+                    false,                   //no boolean operation
+                    0,                       //copy number
+                    checkOverlaps);          //overlaps checking
+
   //     
   // Collimator
   //  
   G4Material* collimator_mat = nist->FindOrBuildMaterial("G4_Pb");
   G4ThreeVector pos1 = G4ThreeVector(0, 0, -3.*cm);
 
-  G4double collimator_pRMin =  0.5*cm, collimator_pRMax = 10.*cm;
+  G4double collimator_pRMin =  0.5*cm, collimator_pRMax = 20.*cm;
   G4double collimator_pDz =  3.*cm;
   G4double collimator_pSPhi = 0.*deg, collimator_pDPhi = 360.*deg;
   G4Tubs* solidCollimator =    
