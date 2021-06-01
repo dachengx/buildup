@@ -24,23 +24,20 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     const DetectorConstruction* detectorConstruction
       = static_cast<const DetectorConstruction*>
         (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
-    fScoringVolume = detectorConstruction->GetScoringVolume();   
+    fScoringVolume = detectorConstruction->GetScoringVolume();
   }
-  // get volume of the current step
-  G4LogicalVolume* prevolume 
-    = step->GetPreStepPoint()->GetTouchableHandle()
-      ->GetVolume()->GetLogicalVolume();
-  // check if we are in scoring volume
-  if (prevolume != fScoringVolume) return;
-  // get volume of the next step
-  G4LogicalVolume* volume 
-    = step->GetPostStepPoint()->GetTouchableHandle()
-      ->GetVolume()->GetLogicalVolume();
-  G4String name = volume->GetName();
-  G4cout << "-----------" << name << "-----------" << G4endl;
 
-  // collect hit in this step
-  if (!name.compareTo("Detector")) {
-    fEventAction->AddHit(1);
+  G4VPhysicalVolume* postpvolume 
+    = step->GetPostStepPoint()->GetPhysicalVolume();
+  
+  if (!postpvolume) {
+    return;
+  } else {
+    G4LogicalVolume* postlvolume = postpvolume->GetLogicalVolume();
+    if (postlvolume != fScoringVolume) {
+      return;
+    } else {
+      fEventAction->AddHit(1);
+    }
   }
 }

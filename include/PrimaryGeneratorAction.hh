@@ -1,7 +1,9 @@
 #ifndef PrimaryGeneratorAction_h
 #define PrimaryGeneratorAction_h 1
 
+#include "G4GeneralParticleSource.hh"
 #include "G4VUserPrimaryGeneratorAction.hh"
+#include "globals.hh"
 
 class G4GeneralParticleSource;
 class G4Event;

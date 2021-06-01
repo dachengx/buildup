@@ -12,10 +12,10 @@
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
-{ }
+{}
 
 DetectorConstruction::~DetectorConstruction()
-{ }
+{}
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {  
@@ -68,13 +68,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                       
   G4LogicalVolume* logicSource =                         
     new G4LogicalVolume(solidSource,         //its solid
-                        world_mat,          //its material
+                        world_mat,           //its material
                         "Source");           //its name
                
   new G4PVPlacement(0,                       //no rotation
                     pos0,                    //at position
-                    logicSource,         //its logical volume
-                    "Source",            //its name
+                    logicSource,             //its logical volume
+                    "Source",                //its name
                     logicWorld,              //its mother  volume
                     false,                   //no boolean operation
                     0,                       //copy number
@@ -151,17 +151,19 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                       
   G4LogicalVolume* logicDetector =                         
     new G4LogicalVolume(solidDetector,     //its solid
-                        detector_mat,              //its material
+                        detector_mat,      //its material
                         "Detector");       //its name
                
   new G4PVPlacement(0,                       //no rotation
                     pos3,                    //at position
-                    logicDetector,         //its logical volume
-                    "Detector",            //its name
+                    logicDetector,           //its logical volume
+                    "Detector",              //its name
                     logicWorld,              //its mother  volume
                     false,                   //no boolean operation
                     0,                       //copy number
                     checkOverlaps);          //overlaps checking
+
+  fScoringVolume = logicDetector;
 
   //
   //always return the physical World

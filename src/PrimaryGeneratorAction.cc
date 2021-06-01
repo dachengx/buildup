@@ -3,7 +3,7 @@
 #include "G4Event.hh"
 #include "G4GeneralParticleSource.hh"
 
-PrimaryGeneratorAction::PrimaryGeneratorAction()
+PrimaryGeneratorAction::PrimaryGeneratorAction() 
 {
   particleGun = new G4GeneralParticleSource();
 }
