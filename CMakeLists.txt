@@ -44,6 +44,7 @@ target_link_libraries(buildup ${Geant4_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(BUILDUP_SCRIPTS
+  Run.mk
   init_vis.mac
   run.mac
   vis.mac

@@ -16,7 +16,22 @@ int main(int argc,char** argv)
   // Detect interactive mode (if no arguments) and define UI session
   //
   G4UIExecutive* ui = 0;
+
   if ( argc == 1 ) {
+    throw std::invalid_argument("More Arguments Needed");
+  }
+
+  std::string s = argv[1];
+  std::string delimiter = "-";
+  G4double thick = std::stod(s.substr(0, s.find(delimiter)));
+  s.erase(0, s.find(delimiter) + delimiter.length());
+  G4double distance = std::stod(s.substr(0, s.find(delimiter)));
+  s.erase(0, s.find(delimiter) + delimiter.length());
+  G4int collimator = std::stoi(s.substr(0, s.find(delimiter)));
+  s.erase(0, s.find(delimiter) + delimiter.length());
+  G4int attenuator = std::stoi(s.substr(0, s.find(delimiter)));
+
+  if ( argc == 2 ) {
     ui = new G4UIExecutive(argc, argv);
   }
 
@@ -31,7 +46,7 @@ int main(int argc,char** argv)
   // Set mandatory initialization classes
   //
   // Detector construction
-  runManager->SetUserInitialization(new DetectorConstruction());
+  runManager->SetUserInitialization(new DetectorConstruction(thick, distance, collimator, attenuator));
 
   // Physics list
   G4VModularPhysicsList* physicsList = new QBBC(0);
@@ -55,7 +70,7 @@ int main(int argc,char** argv)
   if ( ! ui ) { 
     // batch mode
     G4String command = "/control/execute ";
-    G4String fileName = argv[1];
+    G4String fileName = argv[2];
     UImanager->ApplyCommand(command+fileName);
   }
   else { 

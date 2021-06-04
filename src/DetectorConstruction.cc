@@ -9,10 +9,15 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
-DetectorConstruction::DetectorConstruction()
+DetectorConstruction::DetectorConstruction(G4double t, G4double d, G4int c, G4int a)
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
-{}
+{
+  thick = t;
+  distance = d;
+  collimator = c;
+  attenuator = a;
+}
 
 DetectorConstruction::~DetectorConstruction()
 {}
@@ -83,60 +88,64 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   //     
   // Collimator
   //  
-  G4Material* collimator_mat = nist->FindOrBuildMaterial("G4_Pb");
-  G4ThreeVector pos1 = G4ThreeVector(0, 0, -3.*cm);
+  if ( collimator ) {
+    G4Material* collimator_mat = nist->FindOrBuildMaterial("G4_Pb");
+    G4ThreeVector pos1 = G4ThreeVector(0, 0, -3.*cm);
 
-  G4double collimator_pRMin =  0.5*cm, collimator_pRMax = 20.*cm;
-  G4double collimator_pDz =  3.*cm;
-  G4double collimator_pSPhi = 0.*deg, collimator_pDPhi = 360.*deg;
-  G4Tubs* solidCollimator =    
-    new G4Tubs("Collimator", 
-    collimator_pRMin, collimator_pRMax, collimator_pDz, collimator_pSPhi, collimator_pDPhi);
-                      
-  G4LogicalVolume* logicCollimator =                         
-    new G4LogicalVolume(solidCollimator,         //its solid
-                        collimator_mat,          //its material
-                        "Collimator");           //its name
-               
-  new G4PVPlacement(0,                       //no rotation
-                    pos1,                    //at position
-                    logicCollimator,         //its logical volume
-                    "Collimator",            //its name
-                    logicWorld,              //its mother  volume
-                    false,                   //no boolean operation
-                    0,                       //copy number
-                    checkOverlaps);          //overlaps checking
+    G4double collimator_pRMin =  0.5*cm, collimator_pRMax = 20.*cm;
+    G4double collimator_pDz =  3.*cm;
+    G4double collimator_pSPhi = 0.*deg, collimator_pDPhi = 360.*deg;
+    G4Tubs* solidCollimator =    
+      new G4Tubs("Collimator", 
+      collimator_pRMin, collimator_pRMax, collimator_pDz, collimator_pSPhi, collimator_pDPhi);
+                        
+    G4LogicalVolume* logicCollimator =                         
+      new G4LogicalVolume(solidCollimator,         //its solid
+                          collimator_mat,          //its material
+                          "Collimator");           //its name
+                
+    new G4PVPlacement(0,                       //no rotation
+                      pos1,                    //at position
+                      logicCollimator,         //its logical volume
+                      "Collimator",            //its name
+                      logicWorld,              //its mother  volume
+                      false,                   //no boolean operation
+                      0,                       //copy number
+                      checkOverlaps);          //overlaps checking
+  }
 
   //     
   // Attenuator
   //  
-  G4Element* Bi = nist->FindOrBuildElement(83);
-  G4Element* Pb = nist->FindOrBuildElement(82);
-  G4Element* Sn = nist->FindOrBuildElement(50);
-  G4Material* MCP_96 = new G4Material("MCP_96", 9.72*g/cm3, 3);
-  MCP_96->AddElement(Bi, 0.525);
-  MCP_96->AddElement(Pb, 0.32);
-  MCP_96->AddElement(Sn, 0.155);
+  if ( attenuator ) {
+    G4Element* Bi = nist->FindOrBuildElement(83);
+    G4Element* Pb = nist->FindOrBuildElement(82);
+    G4Element* Sn = nist->FindOrBuildElement(50);
+    G4Material* MCP_96 = new G4Material("MCP_96", 9.72*g/cm3, 3);
+    MCP_96->AddElement(Bi, 0.525);
+    MCP_96->AddElement(Pb, 0.32);
+    MCP_96->AddElement(Sn, 0.155);
 
-  G4double attenuator_pX = 2.5*cm, attenuator_pY = 2.5*cm, attenuator_pZ = 1.*cm;
-  G4ThreeVector pos2 = G4ThreeVector(0, 0, attenuator_pZ);
-  G4Box* solidAttenuator =    
-    new G4Box("Attenuator", 
-    attenuator_pX, attenuator_pY, attenuator_pZ);
-                      
-  G4LogicalVolume* logicAttenuator =                         
-    new G4LogicalVolume(solidAttenuator,     //its solid
-                        MCP_96,              //its material
-                        "Attenuator");       //its name
-               
-  new G4PVPlacement(0,                       //no rotation
-                    pos2,                    //at position
-                    logicAttenuator,         //its logical volume
-                    "Attenuator",            //its name
-                    logicWorld,              //its mother  volume
-                    false,                   //no boolean operation
-                    0,                       //copy number
-                    checkOverlaps);          //overlaps checking
+    G4double attenuator_pX = 2.5*cm, attenuator_pY = 2.5*cm, attenuator_pZ = thick / 2 *cm;
+    G4ThreeVector pos2 = G4ThreeVector(0, 0, attenuator_pZ);
+    G4Box* solidAttenuator =    
+      new G4Box("Attenuator", 
+      attenuator_pX, attenuator_pY, attenuator_pZ);
+                        
+    G4LogicalVolume* logicAttenuator =                         
+      new G4LogicalVolume(solidAttenuator,     //its solid
+                          MCP_96,              //its material
+                          "Attenuator");       //its name
+                
+    new G4PVPlacement(0,                       //no rotation
+                      pos2,                    //at position
+                      logicAttenuator,         //its logical volume
+                      "Attenuator",            //its name
+                      logicWorld,              //its mother  volume
+                      false,                   //no boolean operation
+                      0,                       //copy number
+                      checkOverlaps);          //overlaps checking
+  }
 
   //     
   // Detector
@@ -144,7 +153,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4Material* detector_mat = nist->FindOrBuildMaterial("G4_SODIUM_IODIDE");
 
   G4double detector_pX = 2.54*cm, detector_pY = 2.54*cm, detector_pZ = 4.*cm;
-  G4ThreeVector pos3 = G4ThreeVector(0, 0, detector_pZ + 10.*cm);
+  G4ThreeVector pos3 = G4ThreeVector(0, 0, detector_pZ + (distance + thick) * cm);
   G4Box* solidDetector =    
     new G4Box("Detector", 
     detector_pX, detector_pY, detector_pZ);

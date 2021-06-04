@@ -6,27 +6,40 @@
 /run/verbose 0
 /event/verbose 0
 /tracking/verbose 0
+/process/had/verbose 0
 
 /run/initialize
 
-/gps/particle gamma
-/gps/ene/mono 5 MeV
-
-#/gps/pos/type Plane
 /gps/pos/type Point
-#/gps/pos/shape Circle
-#/gps/pos/radius 0.635 cm
-
 /gps/direction 0 0 1
-
 /gps/ang/type cos
 /gps/ang/rot1 -1 0 0
 /gps/ang/mintheta 0. deg
 /gps/ang/maxtheta 90. deg
 /gps/ang/minphi 0. deg
 /gps/ang/maxphi 360. deg
-
 /gps/pos/centre 0 0 -10 cm
+
+/gps/particle gamma
+/gps/ene/mono 0.662 MeV
+
+/run/printProgress 100000
+/run/beamOn 1000000
+
+/gps/particle gamma
+/gps/ene/mono 0.835 MeV
+
+/run/printProgress 100000
+/run/beamOn 1000000
+
+/gps/particle gamma
+/gps/ene/mono 1.17 MeV
+
+/run/printProgress 100000
+/run/beamOn 1000000
+
+/gps/particle gamma
+/gps/ene/mono 1.33 MeV
 
 /run/printProgress 100000
 /run/beamOn 1000000

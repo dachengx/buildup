@@ -12,7 +12,7 @@ class G4LogicalVolume;
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
-    DetectorConstruction();
+    DetectorConstruction(const G4double, const G4double, const G4int, const G4int);
     virtual ~DetectorConstruction();
 
     virtual G4VPhysicalVolume* Construct();
@@ -21,6 +21,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
   protected:
     G4LogicalVolume* fScoringVolume;
+    G4double thick;
+    G4double distance;
+    G4int collimator;
+    G4int attenuator;
 };
 
 #endif
