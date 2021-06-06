@@ -1,14 +1,11 @@
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
-
 #include "G4RunManagerFactory.hh"
-
+#include "G4SystemOfUnits.hh"
 #include "G4UImanager.hh"
 #include "QBBC.hh"
-
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
-
 #include "Randomize.hh"
 
 int main(int argc,char** argv)
@@ -21,15 +18,15 @@ int main(int argc,char** argv)
     throw std::invalid_argument("More Arguments Needed");
   }
 
-  std::string s = argv[1];
+  std::string sargv = argv[1];
   std::string delimiter = "-";
-  G4double thick = std::stod(s.substr(0, s.find(delimiter)));
-  s.erase(0, s.find(delimiter) + delimiter.length());
-  G4double distance = std::stod(s.substr(0, s.find(delimiter)));
-  s.erase(0, s.find(delimiter) + delimiter.length());
-  G4int collimator = std::stoi(s.substr(0, s.find(delimiter)));
-  s.erase(0, s.find(delimiter) + delimiter.length());
-  G4int attenuator = std::stoi(s.substr(0, s.find(delimiter)));
+  G4double thick = std::stod(sargv.substr(0, sargv.find(delimiter))) * cm;
+  sargv.erase(0, sargv.find(delimiter) + delimiter.length());
+  G4double distance = std::stod(sargv.substr(0, sargv.find(delimiter))) * cm;
+  sargv.erase(0, sargv.find(delimiter) + delimiter.length());
+  G4int collimator = std::stoi(sargv.substr(0, sargv.find(delimiter)));
+  sargv.erase(0, sargv.find(delimiter) + delimiter.length());
+  G4int attenuator = std::stoi(sargv.substr(0, sargv.find(delimiter)));
 
   if ( argc == 2 ) {
     ui = new G4UIExecutive(argc, argv);
@@ -46,7 +43,7 @@ int main(int argc,char** argv)
   // Set mandatory initialization classes
   //
   // Detector construction
-  runManager->SetUserInitialization(new DetectorConstruction(thick, distance, collimator, attenuator));
+  runManager->SetUserInitialization(new DetectorConstruction(thick, distance, collimator, attenuator, argv[1]));
 
   // Physics list
   G4VModularPhysicsList* physicsList = new QBBC(0);

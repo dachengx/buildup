@@ -9,7 +9,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
-DetectorConstruction::DetectorConstruction(G4double t, G4double d, G4int c, G4int a)
+DetectorConstruction::DetectorConstruction(G4double t, G4double d, G4int c, G4int a, G4String ss)
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
 {
@@ -17,6 +17,7 @@ DetectorConstruction::DetectorConstruction(G4double t, G4double d, G4int c, G4in
   distance = d;
   collimator = c;
   attenuator = a;
+  arguments = ss;
 }
 
 DetectorConstruction::~DetectorConstruction()
@@ -126,7 +127,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     MCP_96->AddElement(Pb, 0.32);
     MCP_96->AddElement(Sn, 0.155);
 
-    G4double attenuator_pX = 2.5*cm, attenuator_pY = 2.5*cm, attenuator_pZ = thick / 2 *cm;
+    G4double attenuator_pX = 2.5*cm, attenuator_pY = 2.5*cm, attenuator_pZ = thick / 2;
     G4ThreeVector pos2 = G4ThreeVector(0, 0, attenuator_pZ);
     G4Box* solidAttenuator =    
       new G4Box("Attenuator", 
@@ -153,7 +154,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4Material* detector_mat = nist->FindOrBuildMaterial("G4_SODIUM_IODIDE");
 
   G4double detector_pX = 2.54*cm, detector_pY = 2.54*cm, detector_pZ = 4.*cm;
-  G4ThreeVector pos3 = G4ThreeVector(0, 0, detector_pZ + (distance + thick) * cm);
+  G4ThreeVector pos3 = G4ThreeVector(0, 0, detector_pZ + thick + distance);
   G4Box* solidDetector =    
     new G4Box("Detector", 
     detector_pX, detector_pY, detector_pZ);

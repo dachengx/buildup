@@ -10,36 +10,6 @@
 
 /run/initialize
 
-/gps/pos/type Point
-/gps/direction 0 0 1
-/gps/ang/type cos
-/gps/ang/rot1 -1 0 0
-/gps/ang/mintheta 0. deg
-/gps/ang/maxtheta 90. deg
-/gps/ang/minphi 0. deg
-/gps/ang/maxphi 360. deg
-/gps/pos/centre 0 0 -10 cm
+/control/foreach singlerun.mac Egamma 0.662 0.835 1.17 1.33
 
-/gps/particle gamma
-/gps/ene/mono 0.662 MeV
-
-/run/printProgress 100000
-/run/beamOn 1000000
-
-/gps/particle gamma
-/gps/ene/mono 0.835 MeV
-
-/run/printProgress 100000
-/run/beamOn 1000000
-
-/gps/particle gamma
-/gps/ene/mono 1.17 MeV
-
-/run/printProgress 100000
-/run/beamOn 1000000
-
-/gps/particle gamma
-/gps/ene/mono 1.33 MeV
-
-/run/printProgress 100000
-/run/beamOn 1000000
+/control/loop singlerun.mac Egamma 0.2 2.2 0.2

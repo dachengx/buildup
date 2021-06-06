@@ -1,0 +1,15 @@
+/gps/pos/type Point
+/gps/direction 0 0 1
+/gps/ang/type cos
+/gps/ang/rot1 -1 0 0
+/gps/ang/mintheta 0. deg
+/gps/ang/maxtheta 90. deg
+/gps/ang/minphi 0. deg
+/gps/ang/maxphi 360. deg
+/gps/pos/centre 0 0 -10 cm
+
+/gps/particle gamma
+/gps/ene/mono {Egamma} MeV
+
+/run/printProgress 100000
+/run/beamOn 100000

@@ -47,7 +47,9 @@ set(BUILDUP_SCRIPTS
   Run.mk
   init_vis.mac
   run.mac
+  singlerun.mac
   vis.mac
+  collect.py
   )
 
 foreach(_script ${BUILDUP_SCRIPTS})

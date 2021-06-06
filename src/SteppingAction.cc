@@ -34,6 +34,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     return;
   } else {
     G4LogicalVolume* postlvolume = postpvolume->GetLogicalVolume();
+    // if (postlvolume != fScoringVolume || step->GetTotalEnergyDeposit() == 0) {
     if (postlvolume != fScoringVolume) {
       return;
     } else {

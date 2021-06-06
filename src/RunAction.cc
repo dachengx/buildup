@@ -52,12 +52,13 @@ void RunAction::EndOfRunAction(const G4Run* run)
    = static_cast<const PrimaryGeneratorAction*>
      (G4RunManager::GetRunManager()->GetUserPrimaryGeneratorAction());
   G4String runCondition;
+  G4double particleEnergy;
   if (generatorAction)
   {
     const G4GeneralParticleSource* particleGun = generatorAction->GetGeneralParticleSource();
     runCondition += particleGun->GetCurrentSource()->GetParticleDefinition()->GetParticleName();
     runCondition += " of ";
-    G4double particleEnergy = particleGun->GetParticleEnergy();
+    particleEnergy = particleGun->GetParticleEnergy();
     runCondition += G4BestUnit(particleEnergy, "Energy");
   }
         
@@ -66,12 +67,12 @@ void RunAction::EndOfRunAction(const G4Run* run)
   if (IsMaster()) {
     G4cout
      << G4endl
-     << "--------------------End of Global Run-----------------------";
+     << "-----End of Global Run-----";
   }
   else {
     G4cout
      << G4endl
-     << "--------------------End of Local Run------------------------";
+     << "-----End of Local Run------";
   }
 
     G4cout
@@ -81,9 +82,13 @@ void RunAction::EndOfRunAction(const G4Run* run)
      << " Cumulated Hits per run : " 
      << fHitDetectorParticlesN.GetValue()
      << G4endl
-     << "------------------------------------------------------------"
-     << G4endl
+     << "---------------------------"
      << G4endl;
+    const DetectorConstruction* detectorConstruction = static_cast<const DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+    std::ofstream outFile;
+    outFile.open("result/" + detectorConstruction->GetArguments() + ".csv", std::ios::app);
+    outFile << particleEnergy << "," << fHitDetectorParticlesN.GetValue() << G4endl;
+    outFile.close();
 }
 
 void RunAction::AddHit(G4int nparticles)
