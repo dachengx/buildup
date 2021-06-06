@@ -19,10 +19,12 @@ class EventAction : public G4UserEventAction
     virtual void EndOfEventAction(const G4Event* event);
 
     void AddHit(G4int hit) { fnHit += hit; }
+    void AddEdep(G4double edep) { fEdep += edep; }
 
   private:
     RunAction* fRunAction;
     G4int fnHit;
+    G4double fEdep;
 };
 
 #endif

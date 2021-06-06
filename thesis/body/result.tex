@@ -1,1 +1,39 @@
 \section{模拟结果}
+
+通过计算 $\ln(N/N_0)$ 随着 MCP-96 衰减器的厚度的变化关系，进行直线拟合，能够得到不同 $\gamma$ 射线能量下的线衰减常数 $\mu$，与论文\cite{hopkins_linear_2012}对比的结果如表\ref{tab:atten}：
+
+\onecolumn
+\begin{table}
+    \centering
+    \caption{MCP-96 合金对不同能量 $\gamma$ 射线的线衰减常数 $\mu$}
+    \label{tab:atten}
+    \begin{tabular}{l|c|c}
+    \toprule
+    $\gamma$ 光子能量$/\si{MeV}$ & Hopkins,2012$\mu/\si{cm^{-1}}$ & 模拟结果$\mu/\si{cm^{-1}}$ \\ 
+    \hline
+    $0.662$ & $0.9129\pm0.0064$ & $1.0262\pm0.0283$ \\
+    \hline
+    $0.835$ & $0.7622\pm0.0077$ & $0.7413\pm0.0200$ \\
+    \hline
+    $1.17$ & $0.5961\pm0.0089$ & $0.6070\pm0.01360$ \\
+    \hline
+    $1.33$ & $0.5613\pm0.0081$ & $0.4703\pm0.0113$ \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+可见其中数值有一定差异，但是除了 $1.33\si{MeV}$ 除的数据外，差距不大。
+
+\twocolumn
+
+\begin{figure}[!htb]
+  \centering
+  \resizebox{\linewidth}{!}{\input{figures/bthick.pgf}}
+  \caption{}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \resizebox{\linewidth}{!}{\input{figures/benergy.pgf}}
+  \caption{}
+\end{figure}

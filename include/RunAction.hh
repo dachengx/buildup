@@ -18,10 +18,12 @@ class RunAction : public G4UserRunAction
     virtual void   EndOfRunAction(const G4Run*);
 
     void AddHit(G4int nparticles);
+    void AddEdep(G4double edep);
 
   private:
     G4Accumulable<G4int> fTotalParticlesN;
     G4Accumulable<G4int> fHitDetectorParticlesN;
+    G4Accumulable<G4double> fEdep;
 };
 
 #endif

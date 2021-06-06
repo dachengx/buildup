@@ -11,7 +11,7 @@ run:=$(erg:%=result/%.log)
 
 .PHONY : all
 
-all : run csv
+all : run
 
 run : $(run)
 
