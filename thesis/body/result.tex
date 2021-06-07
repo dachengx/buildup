@@ -2,38 +2,58 @@
 
 通过计算 $\ln(N/N_0)$ 随着 MCP-96 衰减器的厚度的变化关系，进行直线拟合，能够得到不同 $\gamma$ 射线能量下的线衰减常数 $\mu$，与论文\cite{hopkins_linear_2012}对比的结果如表\ref{tab:atten}：
 
-\onecolumn
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{MCP-96 合金对不同能量 $\gamma$ 射线的线衰减常数 $\mu$}
     \label{tab:atten}
-    \begin{tabular}{l|c|c}
+    \begin{tabular}{l|c}
     \toprule
-    $\gamma$ 光子能量$/\si{MeV}$ & Hopkins,2012$\mu/\si{cm^{-1}}$ & 模拟结果$\mu/\si{cm^{-1}}$ \\ 
+    $\gamma$ 光子能量$/\si{MeV}$ & Hopkins,2012$\mu/\si{cm^{-1}}$ \\ 
     \hline
-    $0.662$ & $0.9129\pm0.0064$ & $1.0262\pm0.0283$ \\
+    $0.662$ & $0.9129\pm0.0064$ \\
     \hline
-    $0.835$ & $0.7622\pm0.0077$ & $0.7413\pm0.0200$ \\
+    $0.835$ & $0.7622\pm0.0077$ \\
     \hline
-    $1.17$ & $0.5961\pm0.0089$ & $0.6070\pm0.01360$ \\
+    $1.17$ & $0.5961\pm0.0089$ \\
     \hline
-    $1.33$ & $0.5613\pm0.0081$ & $0.4703\pm0.0113$ \\
+    $1.33$ & $0.5613\pm0.0081$ \\
+    \bottomrule
+    \toprule
+    $\gamma$ 光子能量$/\si{MeV}$ & 模拟结果$\mu/\si{cm^{-1}}$ \\ 
+    \hline
+    $0.662$ & $1.0262\pm0.0283$ \\
+    \hline
+    $0.835$ & $0.7413\pm0.0200$ \\
+    \hline
+    $1.17$ & $0.6070\pm0.01360$ \\
+    \hline
+    $1.33$ & $0.4703\pm0.0113$ \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 可见其中数值有一定差异，但是除了 $1.33\si{MeV}$ 除的数据外，差距不大。
 
-\twocolumn
+利用模拟中的能量可以取任意值的特性，可以计算得到更大范围的线衰减系数 $\mu$ 随着 $\gamma$ 射线能量 $E$ 变化关系在更大范围内的情况，如图\ref{fig:atten}：
+
+\begin{figure}[!htb]
+  \centering
+  \resizebox{\linewidth}{!}{\input{figures/eatten.pgf}}
+  \caption{\label{fig:atten}射线能量 $E$ 对线衰减系数 $\mu$ 的影响}
+\end{figure}
+
+在不同 MCP-96 衰减器厚度 $d$ 和入射 $\gamma$ 射线能量 $E$ 下，通过将不加入衰减器与加入时的探测器计数求比值，可以得到累计因子 $B$ 随着 $d$ 和 $E$ 的变化，如图\ref{fig:thick}，其中 Hopkins\,2012 为论文\cite{hopkins_linear_2012}中的结果：
 
 \begin{figure}[!htb]
   \centering
   \resizebox{\linewidth}{!}{\input{figures/bthick.pgf}}
-  \caption{}
+  \caption{\label{fig:thick}衰减器厚度 $d$ 和射线能量 $E$ 对累计因子 $B$ 的影响}
 \end{figure}
+
+同时，可以改变衰减器与探测器之间的距离 $d'$，在不同的 $d'$ 的条件下计算累计因子，如图\ref{fig:disk}，其中 Hopkins\,2012 为论文\cite{hopkins_linear_2012}中的结果:
 
 \begin{figure}[!htb]
   \centering
-  \resizebox{\linewidth}{!}{\input{figures/benergy.pgf}}
-  \caption{}
+  \resizebox{\linewidth}{!}{\input{figures/bdist.pgf}}
+  \caption{\label{fig:dist}衰减器与探测器之间的距离 $d'$ 对累计因子 $B$ 的影响}
 \end{figure}

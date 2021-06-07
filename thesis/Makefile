@@ -8,6 +8,8 @@ pdf : main.pdf
 
 main.pdf : 
 	latexmk -C && latexmk -xelatex main.tex
+	latexmk -C && latexmk -xelatex main.tex
+	latexmk -C && latexmk -xelatex main.tex
 
 clean :
 	latexmk -C
